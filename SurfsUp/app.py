@@ -51,7 +51,7 @@ def home():
 def precipitation():
 
     results = session.query(Measurement.date, Measurement.prcp).\
-              filter(Measurement.date >= (dt.date(2017,8,23)-dt.timedelta(days=365))).all()
+              filter(Measurement.date > (dt.date(2017,8,23)-dt.timedelta(days=365))).all()
     
     output=[]
 
@@ -79,7 +79,7 @@ def stations():
 @app.route("/api/v1.0/tobs")
 def tobs():
     results = session.query(Measurement.date, Measurement.tobs).\
-              filter(Measurement.date >= (dt.date(2017,8,23)-dt.timedelta(days=365))).\
+              filter(Measurement.date.between('2016-01-01', '2016-12-31')).\
               filter(Measurement.station=='USC00519281').all()
     
     output= []
@@ -89,7 +89,7 @@ def tobs():
         tobs_dict['date'] = date
         tobs_dict['tobs'] = tobs
         output.append(tobs_dict)
-
+        
     return jsonify(output)
 
 @app.route("/api/v1.0/<start>")
