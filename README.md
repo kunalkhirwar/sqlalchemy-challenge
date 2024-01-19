@@ -43,7 +43,7 @@ In this section, I used Python and SQLAlchemy to do a basic climate analysis and
 
     -> Queried the previous 12 months of TOBS data for that station.
 
-    -> Plotted the results as a histogram with bins=12. 
+    -> Plotted the results as a histogram with bins=12 (for 12 months of data).
 
 5. Closed my session.
 
