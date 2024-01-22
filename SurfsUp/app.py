@@ -47,6 +47,9 @@ def home():
         f"/api/v1.0/<start>/<end>"
         )
 
+# the following route converts the query results from my precipitation analysis\ 
+# (i.e. retrieved only the last 12 months of data) to a dictionary using date as the key and\ 
+# prcp as the value. Finally, it returns the JSON representation of my dictionary.
 @app.route("/api/v1.0/precipitation")
 def precipitation():
 
@@ -63,7 +66,7 @@ def precipitation():
 
     return jsonify(output)
 
-
+#the following route Returns a JSON list of stations from the dataset.
 @app.route("/api/v1.0/stations")
 def stations():
 
@@ -76,6 +79,8 @@ def stations():
 
     return jsonify(output)
 
+# the following route queries the dates and temperature observations of the most-active station\
+# for the previous year of data and then returns a JSON list of temperature observations for the previous year.
 @app.route("/api/v1.0/tobs")
 def tobs():
     results = session.query(Measurement.date, Measurement.tobs).\
@@ -92,6 +97,10 @@ def tobs():
         
     return jsonify(output)
 
+# the following two routes returns a JSON list of the minimum temperature, the average temperature, and\
+# the maximum temperature for a specified start or start-end range.
+# the first route, for a specified start, calculates TMIN, TAVG, and TMAX for all the dates\
+# greater than or equal to the start date.
 @app.route("/api/v1.0/<start>")
 def start_date(start):
 
@@ -117,8 +126,8 @@ def start_date(start):
     except ValueError:
         return jsonify({"error": "Invalid date format. Please use YYYY-MM-DD."}), 400
 
-
-
+# the second route, for a specified start date and end date, calculates TMIN, TAVG, and TMAX \
+# for the dates from the start date to the end date, inclusive.
 @app.route("/api/v1.0/<start>/<end>")
 def start_end_date(start, end):
 
